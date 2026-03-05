@@ -29,6 +29,11 @@ class GroupController extends Controller
 
     public function get(Group $group, GetRequest $request)
     {
+        // Verify ownership
+        if ($group->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'No tens accés a aquest grup.'], 403);
+        }
+
         $filter = array_merge($request->input('filter'), ['id' => $group->id]);
 
         return $this->service->get(
@@ -41,6 +46,15 @@ class GroupController extends Controller
     public function save(Group $group, GroupRequest $request)
     {
         return $this->service->save($group, $request);
+    }
+
+    public function duplicate(Group $group, GroupRequest $request)
+    {
+        if ($group->user_id !== $request->user()->id) {
+            return response()->json(['message' => 'No tens accés a aquest grup.'], 403);
+        }
+
+        return $this->service->duplicate($group, $request);
     }
 
     public function delete(Group $group)

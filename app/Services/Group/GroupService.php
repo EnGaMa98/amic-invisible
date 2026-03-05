@@ -20,6 +20,11 @@ class GroupService extends BaseService
     {
         $query = $this->getModel()->newQuery();
 
+        // Scope to authenticated user
+        if (auth()->check()) {
+            $query->where('user_id', auth()->id());
+        }
+
         if (in_array('participants', $include)) {
             $query->with('participants');
         }
@@ -57,9 +62,37 @@ class GroupService extends BaseService
         $fields = $request->input('fields', []);
 
         $group->fill($fields);
+
+        // Assign user on creation
+        if (!$group->exists && auth()->check()) {
+            $group->user_id = auth()->id();
+        }
+
         $group->save();
 
         return new GroupResource($group->fresh());
+    }
+
+    public function duplicate(Group $group, Request $request): GroupResource
+    {
+        $fields = $request->input('fields', []);
+
+        $newGroup = Group::create(array_merge([
+            'user_id' => auth()->id(),
+            'description' => $group->description,
+            'budget' => $group->budget,
+            'event_date' => $group->event_date,
+            'status' => 'draft',
+        ], $fields));
+
+        foreach ($group->participants as $participant) {
+            $newGroup->participants()->create([
+                'name' => $participant->name,
+                'email' => $participant->email,
+            ]);
+        }
+
+        return new GroupResource($newGroup->load('participants'));
     }
 
     public function delete(Group $group): void

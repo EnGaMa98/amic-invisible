@@ -19,6 +19,10 @@ class AssignmentController extends Controller
 
     public function index(Group $group, GetRequest $request)
     {
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['message' => 'No tens permisos per veure les assignacions.'], 403);
+        }
+
         $filter = array_merge($request->input('filter'), ['group_id' => $group->id]);
 
         return $this->service->get(
