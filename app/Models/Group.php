@@ -17,6 +17,7 @@ class Group extends Model
         'description',
         'budget',
         'event_date',
+        'email_body',
         'status',
     ];
 

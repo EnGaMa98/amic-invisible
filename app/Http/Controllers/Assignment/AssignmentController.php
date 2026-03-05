@@ -7,6 +7,7 @@ use App\Http\Requests\Shared\GetRequest;
 use App\Models\Group;
 use App\Services\Assignment\AssignmentService;
 use Exception;
+use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
 {
@@ -47,9 +48,12 @@ class AssignmentController extends Controller
         }
     }
 
-    public function sendEmails(Group $group)
+    public function sendEmails(Group $group, Request $request)
     {
         try {
+            $emailBody = $request->input('fields.email_body');
+            $group->update(['email_body' => $emailBody]);
+
             $sent = $this->service->sendEmails($group);
 
             return response()->json([

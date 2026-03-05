@@ -27,6 +27,12 @@
 
         <p class="receiver-name">{{ $receiver->name }}</p>
 
+        @if($group->email_body)
+            <div style="margin: 16px 0; padding: 16px; background: #fff; border-left: 4px solid #c0392b; border-radius: 4px;">
+                {!! nl2br(e($group->email_body)) !!}
+            </div>
+        @endif
+
         @if($group->budget)
             <p>Pressupost: <span class="budget">{{ number_format($group->budget, 2) }} €</span></p>
         @endif
