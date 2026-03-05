@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333; }
+        .header { text-align: center; padding: 20px 0; }
+        .header h1 { color: #c0392b; margin: 0; }
+        .content { background: #f9f9f9; border-radius: 8px; padding: 24px; margin: 20px 0; }
+        .receiver-name { font-size: 24px; font-weight: bold; color: #c0392b; text-transform: uppercase; text-decoration: underline; }
+        .budget { background: #27ae60; color: white; display: inline-block; padding: 8px 16px; border-radius: 4px; font-weight: bold; }
+        .footer { text-align: center; padding: 20px 0; color: #888; font-size: 14px; }
+        .gif { text-align: center; margin: 20px 0; }
+        .gif img { max-width: 300px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎁 Amic Invisible</h1>
+        <p>{{ $group->name }}</p>
+    </div>
+
+    <div class="content">
+        <p>Hola <strong>{{ $giver->name }}</strong>!</p>
+
+        <p>T'ha tocat fer-li un regal a:</p>
+
+        <p class="receiver-name">{{ $receiver->name }}</p>
+
+        @if($group->budget)
+            <p>Pressupost: <span class="budget">{{ number_format($group->budget, 2) }} €</span></p>
+        @endif
+
+        @if($group->event_date)
+            <p>📅 Data de l'event: <strong>{{ $group->event_date->format('d/m/Y') }}</strong></p>
+        @endif
+    </div>
+
+    <div class="gif">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3RqOXRnaXgzdWp5aTliaTl1bnVjODZvMm5lbTY3MWk0eDc2aXRoaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/WxTG12gbrdiHb0H1Jo/giphy.gif" alt="Happy Holidays GIF" />
+    </div>
+
+    <div class="footer">
+        <p><strong><em>BON NADAL! 🎄</em></strong></p>
+    </div>
+</body>
+</html>

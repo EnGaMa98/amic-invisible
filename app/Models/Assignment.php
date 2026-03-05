@@ -11,18 +11,28 @@ class Assignment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'group_id',
         'giver_id',
         'receiver_id',
-        'year'
+        'sent_at',
     ];
+
+    protected $casts = [
+        'sent_at' => 'datetime',
+    ];
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
 
     public function giver(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'giver_id');
+        return $this->belongsTo(Participant::class, 'giver_id');
     }
 
     public function receiver(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'receiver_id');
+        return $this->belongsTo(Participant::class, 'receiver_id');
     }
 }
