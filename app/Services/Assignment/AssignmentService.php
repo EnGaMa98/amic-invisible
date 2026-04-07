@@ -116,4 +116,26 @@ class AssignmentService extends BaseService
 
         return $sent;
     }
+
+    public function sendEmailToParticipant(Group $group, Participant $participant): void
+    {
+        $assignment = Assignment::where('group_id', $group->id)
+            ->where('giver_id', $participant->id)
+            ->with('receiver')
+            ->first();
+
+        if (!$assignment) {
+            throw new Exception('Aquest participant no té cap assignació.');
+        }
+
+        if (!$participant->token) {
+            $participant->update(['token' => Participant::generateToken()]);
+            $participant->refresh();
+        }
+
+        Mail::to($participant->email)
+            ->send(new AssignmentMail($group, $participant, $assignment->receiver));
+
+        $assignment->update(['sent_at' => now()]);
+    }
 }

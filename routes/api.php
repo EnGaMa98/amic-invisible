@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/assignments', [AssignmentController::class, 'index']);
             Route::post('/draw', [AssignmentController::class, 'draw']);
             Route::post('/send-emails', [AssignmentController::class, 'sendEmails']);
+            Route::post('/send-email/{participant}', [AssignmentController::class, 'sendEmailToParticipant']);
         });
     });
 });

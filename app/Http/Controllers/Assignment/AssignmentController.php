@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Assignment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shared\GetRequest;
 use App\Models\Group;
+use App\Models\Participant;
 use App\Services\Assignment\AssignmentService;
 use Exception;
 use Illuminate\Http\Request;
@@ -59,6 +60,19 @@ class AssignmentController extends Controller
             return response()->json([
                 'message' => "{$sent} correus enviats correctament.",
                 'count' => $sent,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+    }
+
+    public function sendEmailToParticipant(Group $group, Participant $participant)
+    {
+        try {
+            $this->service->sendEmailToParticipant($group, $participant);
+
+            return response()->json([
+                'message' => "Correu enviat a {$participant->name}.",
             ]);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
