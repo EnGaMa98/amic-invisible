@@ -58,11 +58,7 @@
         <p style="color: #888; font-size: 13px; margin-top: 8px;">Des d'aquest enllaç podràs veure el teu amic invisible i escriure les teves preferències de regal.</p>
     </div>
 
-    <div class="gif">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3RqOXRnaXgzdWp5aTliaTl1bnVjODZvMm5lbTY3MWk0eDc2aXRoaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/WxTG12gbrdiHb0H1Jo/giphy.gif" alt="Happy Holidays GIF" />
-    </div>
-
-    <div class="footer">
+<div class="footer">
         <p><strong><em>BON NADAL! 🎄</em></strong></p>
     </div>
 </body>
