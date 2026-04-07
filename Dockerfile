@@ -4,7 +4,9 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libzip-dev \
     unzip \
-    && docker-php-ext-install pdo_pgsql pgsql zip opcache \
+    ca-certificates \
+    && docker-php-ext-install pdo_pgsql pgsql zip opcache sockets \
+    && update-ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN a2enmod rewrite
