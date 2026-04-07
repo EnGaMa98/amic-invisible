@@ -14,11 +14,7 @@ class AuthService
     {
         $user = User::where('email', $email)->firstOrFail();
 
-        // Invalidate previous unused OTPs
-        OtpCode::where('email', $email)
-            ->whereNull('used_at')
-            ->where('expires_at', '>', now())
-            ->update(['used_at' => now()]);
+        OtpCode::where('email', $email)->delete();
 
         $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
 
