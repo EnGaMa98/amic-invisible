@@ -65,6 +65,12 @@ return [
             'transport' => 'resend',
         ],
 
+        'httpsmtp' => [
+            'transport' => 'httpsmtp',
+            'endpoint' => env('HTTPSMTP_ENDPOINT'),
+            'secret' => env('HTTPSMTP_SECRET'),
+        ],
+
         'sendmail' => [
             'transport' => 'sendmail',
             'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
