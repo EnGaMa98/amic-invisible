@@ -1,0 +1,10 @@
+vendor/
+node_modules/
+.env
+.env.backup
+.env.production
+.git/
+.idea/
+.vscode/
+*.log
+*.sqlite
