@@ -13,6 +13,7 @@ class ParticipantResource extends BaseResource
             'fields' => [
                 'name' => $this->name,
                 'email' => $this->email,
+                'preferences' => $this->preferences,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ],

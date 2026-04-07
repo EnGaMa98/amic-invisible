@@ -15,12 +15,14 @@ class AssignmentMail extends Mailable
     public Group $group;
     public Participant $giver;
     public Participant $receiver;
+    public string $publicUrl;
 
     public function __construct(Group $group, Participant $giver, Participant $receiver)
     {
         $this->group = $group;
         $this->giver = $giver;
         $this->receiver = $receiver;
+        $this->publicUrl = config('app.frontend_url') . '/p/' . $giver->token;
     }
 
     public function build()

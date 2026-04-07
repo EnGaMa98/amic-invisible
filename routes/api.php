@@ -4,6 +4,7 @@ use App\Http\Controllers\Assignment\AssignmentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Group\GroupController;
 use App\Http\Controllers\Participant\ParticipantController;
+use App\Http\Controllers\Public\PublicParticipantController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('auth')->group(function () {
     Route::post('/request-otp', [AuthController::class, 'requestOtp']);
     Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+});
+
+// Public participant pages (no auth required)
+Route::prefix('public')->middleware('throttle:60,1')->group(function () {
+    Route::get('/participant/{token}', [PublicParticipantController::class, 'show']);
+    Route::put('/participant/{token}/preferences', [PublicParticipantController::class, 'updatePreferences']);
 });
 
 // Protected routes

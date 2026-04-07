@@ -6,6 +6,7 @@ use App\Http\Resources\Assignment\AssignmentResource;
 use App\Mail\AssignmentMail;
 use App\Models\Assignment;
 use App\Models\Group;
+use App\Models\Participant;
 use App\Services\BaseService;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
@@ -92,6 +93,13 @@ class AssignmentService extends BaseService
 
         if ($assignments->isEmpty()) {
             throw new Exception('No hi ha assignacions per enviar. Fes el sorteig primer.');
+        }
+
+        foreach ($assignments as $assignment) {
+            if (!$assignment->giver->token) {
+                $assignment->giver->update(['token' => Participant::generateToken()]);
+                $assignment->giver->refresh();
+            }
         }
 
         $sent = 0;
